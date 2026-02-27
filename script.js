@@ -23,32 +23,28 @@ controls.update();
 
 // Create a mesh and add it to the scene
 
-let width = 10;
-let height = 8;
-let depth = 12;
-let angle1 = 60
-let angle2 = 120;
+let widthInput = document.getElementById('width');
+let heightInput = document.getElementById('height');
+let depthInput = document.getElementById('depth');
+let angle1Input = document.getElementById('alpha');
+let angle2Input = document.getElementById('beta');
+let updateBtn = document.getElementById('updateBtn');
+
+// const width = parseFloat(widthInput.value);
+// const height = parseFloat(heightInput.value);
+// const depth = parseFloat(depthInput.value);
+// const angle1 = parseFloat(angle1Input.value);
+// const angle2 = parseFloat(angle2Input.value);
+
+// const geometry = createAngledBlock(width,height,depth,angle1,angle2);
 
 
 
-const shape = new THREE.Shape();
-shape.moveTo(0, 0);
-shape.lineTo(width, 0);
-shape.lineTo(width, height);
-shape.lineTo(0, height);
 
-shape.closePath();
+// const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
 
-const extrudeSettings = {
-    depth: depth,
-    bevelEnabled: false
-};
+// console.log(geometry);
 
-const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-
-console.log(geometry);
-
-const position = geometry.attributes.position;
 
 // const angle = 30;
 // const slope = Math.tan(THREE.MathUtils.degToRad(angle));
@@ -104,8 +100,61 @@ const position = geometry.attributes.position;
 // const result = evaluator.evaluate(baseBrush, cutterBrush, SUBTRACTION);
 
 const material = new THREE.MeshNormalMaterial();
-const mesh = new THREE.Mesh(geometry,material);
-scene.add(mesh);
+// const mesh = new THREE.Mesh(geometry,material);
+
+function createAngledBlock(x,y,z,angle1,angle2){
+
+    const alpha = angle1 * (Math.PI / 180);
+    const beta = angle2 * (Math.PI / 180);
+
+    const leftOffset = y * Math.tan(alpha);
+    const rightOffset = y * Math.tan(beta);
+
+    if(leftOffset+rightOffset >= x){
+        alert("Angles are too much compared to width !!!")
+        return;
+    }
+
+    const shape = new THREE.Shape();
+    shape.moveTo(0,0);
+    shape.lineTo(x,0);
+    shape.lineTo(x-rightOffset,y);
+    shape.lineTo(leftOffset,y);
+    shape.closePath();
+
+    const extrudeSettings = {
+        depth: z,
+        bevelEnabled: false,
+
+    };
+
+    return new THREE.ExtrudeGeometry(shape,extrudeSettings);
+
+}
+
+let mesh;
+
+function buildMesh(){
+    const width = parseFloat(widthInput.value);
+    const height = parseFloat(heightInput.value);
+    const depth = parseFloat(depthInput.value);
+    const alpha = parseFloat(angle1Input.value);
+    const beta = parseFloat(angle2Input.value);
+
+    const geometry = createAngledBlock(width,height,depth,alpha,beta);
+
+    if(mesh){
+        scene.remove(mesh);
+    }
+
+    mesh = new THREE.Mesh(geometry,material);
+    scene.add(mesh);
+}
+
+buildMesh();
+
+updateBtn.addEventListener("click" , buildMesh);
+// scene.add(mesh);
 
 // result.material = new THREE.MeshNormalMaterial();
 // scene.add(result);
@@ -134,4 +183,4 @@ function animate() {
 }
 animate();
 
-console.log(geometry.attributes.position.array);
+// console.log(geometry.attributes.position.array);

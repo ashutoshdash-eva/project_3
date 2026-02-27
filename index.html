@@ -4,14 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 3</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        *{
+        body {
             margin: 0;
-            overflow: hidden;
+            overflow: hidden; /* Prevents scrollbars for the 3D canvas */
+            background-color: #121212;
+        }
+
+        /* Glassmorphism Panel Utility */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .avatar-gradient { background: linear-gradient(135deg, #6C5CE7, #00BFA6); }
+
+        /* --- Custom Inputs & Buttons --- */
+        .glass-panel .form-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            margin-bottom: 0; 
+        }
+
+        /* Customizing Bootstrap inputs for the Neon Technical theme */
+        .neon-input {
+            width: 80px !important;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: #00ffc3 !important; /* Neon Teal */
+            font-family: 'JetBrains Mono', monospace; /* Technical look */
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .neon-input:focus {
+            border-color: #00ffc3 !important;
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            box-shadow: 0 0 8px rgba(0, 255, 195, 0.3) !important;
+        }
+
+        /* Gradient Button Styling */
+        .btn-gradient {
+            background: linear-gradient(135deg, #00BFA6, #6C5CE7);
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(0, 255, 195, 0.35);
+            color: #fff;
         }
     </style>
 </head>
-<body>
+<body class="text-white">
+
+    <!-- <a href="../index.html" class="btn btn-outline-light position-fixed bottom-0 start-50 translate-middle-x mb-4 rounded-pill px-4 glass-panel" style="z-index: 1000; text-decoration: none;">
+        ← Back to Hub
+    </a> -->
+
+    <div class="position-fixed top-0 start-0 m-3 p-2 rounded-4 shadow d-flex align-items-center gap-3 glass-panel" style="z-index: 1000; min-width: 200px;">
+        <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center flex-shrink-0 avatar-gradient" style="width: 65px; height: 65px;">
+            <img src="./Image/IMG_20260222_005742.png" alt="Ashutosh Dash" class="w-100 h-100 object-fit-cover" onerror="this.style.display='none'">
+        </div>
+        <div class="d-flex flex-column">
+            <span class="fw-bold" style="font-size: 15px;">Ashutosh Dash</span>
+            <span class="text-white-50" style="font-size: 12px;">Software Engineer</span>
+        </div>
+    </div>
+
+    <div class="position-fixed top-0 end-0 m-3 p-4 rounded-4 glass-panel" style="width: 300px; z-index: 1000;">
+        
+        <div class="d-flex flex-column gap-3">
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <label for="width" class="form-label">Width:</label>
+                <input type="number" id="width" class="form-control neon-input shadow-none px-2 py-1 text-center" value="10" step="0.1">
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <label for="height" class="form-label">Height:</label>
+                <input type="number" id="height" class="form-control neon-input shadow-none px-2 py-1 text-center" value="4" step="0.1">
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <label for="depth" class="form-label">Depth:</label>
+                <input type="number" id="depth" class="form-control neon-input shadow-none px-2 py-1 text-center" value="2" step="0.1">
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <label for="alpha" class="form-label">Left Angle:</label>
+                <input type="number" id="alpha" class="form-control neon-input shadow-none px-2 py-1 text-center" value="45" step="1">
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <label for="beta" class="form-label">Right Angle:</label>
+                <input type="number" id="beta" class="form-control neon-input shadow-none px-2 py-1 text-center" value="45" step="1">
+            </div>
+
+            <button id="updateBtn" class="btn btn-gradient mt-2 py-2">Update Mesh</button>
+        </div>
+    </div>
 
     <script type="module" src="script.js"></script>
 </body>
